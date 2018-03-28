@@ -5,7 +5,7 @@ import os
 from flask import Flask
 
 from pyperboard import views
-from pyperboard.config import Config, ConfigSchema
+from pyperboard.config import Config, ConfigurationError
 
 logger = logging.getLogger(__name__)
 
@@ -31,18 +31,21 @@ def serve():
 
     try:
         with open(args.config, 'r') as config_file:
-            raw_options = config_file.read()
+            options = config_file.read()
     except IOError as e:
         logger.error(f'Config file {e.filename} not found.')
         exit(1)
     else:
-        options, _ = ConfigSchema().loads(raw_options)
-
         config = Config()
-        config.update(options)
 
-        server = create_app(config)
-        server.run()
+        try:
+            config.update_from_json(options)
+        except ConfigurationError as err:
+            for option, errors in err.errors.items():
+                logger.error(f"{option}: {errors.pop()}")
+        else:
+            server = create_app(config)
+            server.run()
 
 
 if __name__ == '__main__':

@@ -1,2 +1,1 @@
-from pyperboard.config.base import Config
-from pyperboard.config.schema import ConfigSchema
+from pyperboard.config.base import Config, ConfigurationError
