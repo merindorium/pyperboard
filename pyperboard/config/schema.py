@@ -1,7 +1,8 @@
-from marshmallow import Schema
+from marshmallow import Schema, fields
 
-from pyperboard.config.options import Dir
+from pyperboard.config import options
 
 
 class ConfigSchema(Schema):
-    DOCS_DIR = Dir(required=True)
+    DOCS_DIR = options.Dir(required=True)
+    ORDER = fields.List(fields.String())

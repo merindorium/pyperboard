@@ -13,6 +13,7 @@ class Config(metaclass=Singleton):
     DOCS_DIR = None
     THEME = 'default'
     THEMES_DIR = os.path.join(ROOT_DIR, 'themes')
+    ORDER = []
 
     def update_from_json(self, json_data: str) -> None:
         options, errors = ConfigSchema().loads(json_data)

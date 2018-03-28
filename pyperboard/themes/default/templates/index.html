@@ -10,8 +10,8 @@
     <div class="dark-box"></div>
     <div class="content">
         {% autoescape false %}
-        {% for DOC in DOCS %}
-        {{ DOC }}
+        {% for page in pages %}
+        {{ page }}
         {%endfor%}
         {% endautoescape %}
     </div>
