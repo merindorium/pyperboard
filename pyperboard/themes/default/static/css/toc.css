@@ -1,0 +1,84 @@
+.toc {
+    -webkit-transition: left ease-in-out;
+    -webkit-transition-delay: 0.3s;
+    -moz-transition: left ease-in-out 0.3s;
+    -o-transition: left ease-in-out 0.3s;
+    transition: left ease-in-out 0.3s;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: fixed;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 230px;
+    background-color: #f5f4f9;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.toc ol, .toc li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 3;
+}
+
+.toc > .toc-list {
+    overflow: hidden;
+    position: relative
+}
+
+.toc-list {
+    margin: 0;
+    padding-left: 0;
+}
+
+.toc-link {
+    display: block;
+    overflow-x: hidden;
+}
+
+a.toc-link {
+    height: 100%;
+    color: #333333;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.is-collapsible {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: all 500ms ease-in-out;
+    background-color: rgba(0, 0, 0, 0.05);
+
+}
+
+.is-collapsed {
+    max-height: 0
+}
+
+.is-position-fixed {
+    position: fixed !important;
+    top: 0
+}
+
+.toc .node-name--H1 {
+    padding-left: 15px;
+}
+
+.toc .node-name--H2 {
+    padding-left: 30px;
+
+}
+
+.toc-link.is-active-link {
+    color: #393939;
+}
+
+.is-active-link {
+    background-color: #55cf4c;
+}

@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/style.css') }}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/toc.css') }}"/>
+    <script src="{{ url_for('static', filename='/js/tocbot.js') }}"></script>
 </head>
 <body>
+<div class="toc"></div>
+
 <div class="page-wrapper">
     <div class="dark-box"></div>
     <div class="content">
@@ -17,4 +21,13 @@
     </div>
 </div>
 </body>
+<script>
+    tocbot.init({
+        tocSelector: '.toc',
+        contentSelector: '.content',
+        headingSelector: 'h1, h2',
+        throttleTimeout: 150,
+        scrollSmooth: false
+    });
+</script>
 </html>
