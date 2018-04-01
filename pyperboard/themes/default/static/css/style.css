@@ -1,3 +1,8 @@
+@font-face {
+    font-family: SourceCodePro;
+    src: url(/fonts/SourceCodePro-Regular.ttf);
+}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
     display: block;
 }
@@ -16,17 +21,12 @@ audio:not([controls]) {
 }
 
 html {
-    font-family: 'Ubuntu', sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 }
 
 body {
     margin: 0;
-}
-
-a:focus {
-    outline: thin dotted;
 }
 
 a:active, a:hover {
@@ -55,7 +55,7 @@ mark {
 }
 
 code, kbd, pre, samp {
-    font-family: 'Monaco';
+    font-family: 'SourceCodePro';
     font-size: 1em;
 }
 
@@ -112,7 +112,6 @@ legend {
 }
 
 button, input, select, textarea {
-    font-family: 'Ubuntu', sans-serif;
     font-size: 100%;
     margin: 0;
 }
@@ -162,7 +161,6 @@ table {
 }
 
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, html, body {
-    font-family: 'Ubuntu';
     font-size: 14px;
 }
 
@@ -171,8 +169,8 @@ table {
 }
 
 .content code, .content pre {
-    font-family: 'Monaco';
-    font-size: 1em;
+    font-family: 'SourceCodePro';
+    font-size: 0.9em;
 }
 
 .content code {
@@ -183,123 +181,7 @@ table {
     hyphens: auto;
 }
 
-.highlight table td {
-    padding: 5px;
-}
-
-.highlight table pre {
-    margin: 0;
-}
-
-.highlight, .highlight .w {
-    color: #f8f8f2;
-    background-color: #272822;
-}
-
-.highlight .err {
-    color: #151515;
-    background-color: #ac4142;
-}
-
-.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
-    color: #505050;
-}
-
-.highlight .cp {
-    color: #f4bf75;
-}
-
-.highlight .nt {
-    color: #f4bf75;
-}
-
-.highlight .o, .highlight .ow {
-    color: #d0d0d0;
-}
-
-.highlight .p, .highlight .pi {
-    color: #d0d0d0;
-}
-
-.highlight .gi {
-    color: #90a959;
-}
-
-.highlight .gd {
-    color: #ac4142;
-}
-
-.highlight .gh {
-    color: #6a9fb5;
-    background-color: #151515;
-    font-weight: bold;
-}
-
-.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
-    color: #aa759f;
-}
-
-.highlight .kc {
-    color: #d28445;
-}
-
-.highlight .kt {
-    color: #d28445;
-}
-
-.highlight .kd {
-    color: #d28445;
-}
-
-.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
-    color: #90a959;
-}
-
-.highlight .sr {
-    color: #75b5aa;
-}
-
-.highlight .si {
-    color: #8f5536;
-}
-
-.highlight .se {
-    color: #8f5536;
-}
-
-.highlight .nn {
-    color: #f4bf75;
-}
-
-.highlight .nc {
-    color: #f4bf75;
-}
-
-.highlight .no {
-    color: #f4bf75;
-}
-
-.highlight .na {
-    color: #6a9fb5;
-}
-
-.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
-    color: #90a959;
-}
-
-.highlight .ss {
-    color: #90a959;
-}
-
-.highlight .c, .highlight .cm, .highlight .c1, .highlight .cs {
-    color: #909090;
-}
-
-.highlight, .highlight .w {
-    background-color: #292929;
-}
-
-.content aside.warning:before, .content aside.notice:before, .content aside.success:before, .tocify-wrapper > .search:before {
+.content aside.warning:before, .content aside.notice:before, .content aside.success:before {
     font-family: 'icomoon';
     speak: none;
     font-style: normal;
@@ -398,43 +280,6 @@ html, body {
     right: 0;
     top: 0;
     bottom: 0;
-}
-
-.page-wrapper .lang-selector {
-    position: fixed;
-    z-index: 50;
-    border-bottom: 5px solid #393939;
-}
-
-.lang-selector {
-    background-color: #222222;
-    width: 100%;
-    font-weight: bold;
-}
-
-.lang-selector a {
-    display: block;
-    float: left;
-    color: white;
-    text-decoration: none;
-    padding: 0 10px;
-    line-height: 30px;
-}
-
-.lang-selector a:active {
-    background-color: #111111;
-    color: white;
-}
-
-.lang-selector a.active {
-    background-color: #393939;
-    color: white;
-}
-
-.lang-selector:after {
-    content: '';
-    clear: both;
-    display: block;
 }
 
 .content {
@@ -565,7 +410,6 @@ html, body {
 
 .content p, .content li, .content dt, .content dd {
     line-height: 1.6;
-    margin-top: 0;
 }
 
 .content img {
@@ -604,8 +448,7 @@ html, body {
     font-size: 14px;
 }
 
-.content pre, .content blockquote {
-    background-color: #292929;
+.content .codehilite, .content blockquote {
     color: #fff;
     padding: 1em 28px;
     margin: 0;
@@ -615,7 +458,13 @@ html, body {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.content .codehilite {
+    background-color: #292929;
+    border-radius: 3px;
+    margin-right: 2%;
+    width: 46%;
 }
 
 .content pre > p, .content blockquote > p {
@@ -625,22 +474,21 @@ html, body {
 .content pre a, .content blockquote a {
     color: #fff;
     text-decoration: none;
-    border-bottom: dashed 1px #ccc;
 }
 
-.content pre a, .content blockquote .clipboard {
+.content pre a, .content blockquote {
     border-bottom: none;
 }
 
 .content blockquote > p {
-    background-color: #1c1c1c;
-    border-radius: 5px;
-    padding: 13px;
     color: #ccc;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #404040;
+    font-weight: 700;
 }
 
 h1:focus, h2:focus, h3:focus, h4:focus {
+    outline: none;
+}
+
+a:focus {
     outline: none;
 }
