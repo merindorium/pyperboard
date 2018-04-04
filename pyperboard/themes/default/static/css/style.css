@@ -3,6 +3,10 @@
     src: url(/fonts/SourceCodePro-Regular.ttf);
 }
 
+:root {
+    --code-font: SourceCodePro;
+}
+
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
     display: block;
 }
@@ -55,7 +59,7 @@ mark {
 }
 
 code, kbd, pre, samp {
-    font-family: 'SourceCodePro';
+    font-family: var(--code-font);
     font-size: 1em;
 }
 
@@ -169,7 +173,7 @@ table {
 }
 
 .content code, .content pre {
-    font-family: 'SourceCodePro';
+    font-family: var(--code-font);
     font-size: 0.9em;
 }
 
@@ -373,7 +377,6 @@ html, body {
 }
 
 .content table th, .content table td {
-    text-align: left;
     vertical-align: top;
     line-height: 1.6;
 }
@@ -491,4 +494,17 @@ h1:focus, h2:focus, h3:focus, h4:focus {
 
 a:focus {
     outline: none;
+}
+
+.attribute .required {
+    color: red;
+    text-transform: uppercase;
+    font-family: var(--code-font);
+
+}
+
+.attribute .optional {
+    color: #6e6e6e;
+    font-family: var(--code-font);
+
 }
