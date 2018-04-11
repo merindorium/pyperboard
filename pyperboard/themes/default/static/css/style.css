@@ -5,6 +5,12 @@
 
 :root {
     --code-font: SourceCodePro;
+    --red: #E74443;
+    --green: #17C152;
+    --orange: #F55D3E;
+    --yellow: #F0A202;
+    --violet: #5A1ED9;
+    --cyan: #46B2C8;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
@@ -451,7 +457,7 @@ html, body {
     font-size: 14px;
 }
 
-.content .codehilite, .content blockquote {
+.content .codehilite, .content blockquote, .content .api-endpoint {
     color: #fff;
     padding: 1em 28px;
     margin: 0;
@@ -468,6 +474,61 @@ html, body {
     border-radius: 3px;
     margin-right: 2%;
     width: 46%;
+}
+
+.api-endpoint .url {
+    display: flex;
+    flex: 1 0 0;
+    padding-left: 10pt;
+    align-items: center;
+    background-color: #292929;
+    font-size: 0.9em;
+    border-radius: 0 3px 3px 0;
+}
+
+.api-endpoint {
+    display: flex;
+    flex-wrap: nowrap;
+    font-family: var(--code-font);
+}
+
+.api-endpoint .method {
+    width: 70px;
+    padding: 10px 0;
+    border-radius: 3px 0 0 3px;
+    background-color: #777;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+}
+
+.api-endpoint .method.method-post {
+    background-color: var(--green)
+}
+
+.api-endpoint .method.method-get {
+    background-color: var(--violet)
+}
+
+.api-endpoint .method.method-delete {
+    background-color: var(--red)
+}
+
+.api-endpoint .method.method-put {
+    background-color: var(--orange)
+}
+
+.api-endpoint .method.method-patch {
+    background-color: var(--yellow)
+}
+
+.api-endpoint .method.method-head {
+    background-color: var(--cyan)
+}
+
+.api-endpoint .method.method-options {
+    background-color: var(--cyan)
 }
 
 .content pre > p, .content blockquote > p {
@@ -497,7 +558,7 @@ a:focus {
 }
 
 .attribute .required {
-    color: red;
+    color: var(--red);
     text-transform: uppercase;
     font-family: var(--code-font);
 
