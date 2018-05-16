@@ -457,7 +457,7 @@ html, body {
     font-size: 14px;
 }
 
-.content .codehilite, .content blockquote, .content .api-endpoint {
+.content .codehilite, .content blockquote, .content .api-endpoint, .content .websocket {
     color: #fff;
     padding: 1em 28px;
     margin: 0;
@@ -476,7 +476,7 @@ html, body {
     width: 46%;
 }
 
-.api-endpoint .url {
+.api-endpoint .url, .websocket .url {
     display: flex;
     flex: 1 0 0;
     padding-left: 10pt;
@@ -486,13 +486,13 @@ html, body {
     border-radius: 0 3px 3px 0;
 }
 
-.api-endpoint {
+.api-endpoint, .websocket {
     display: flex;
     flex-wrap: nowrap;
     font-family: var(--code-font);
 }
 
-.api-endpoint .method {
+.api-endpoint .method, .websocket .method {
     width: 70px;
     padding: 10px 0;
     border-radius: 3px 0 0 3px;
@@ -529,6 +529,14 @@ html, body {
 
 .api-endpoint .method.method-options {
     background-color: var(--cyan)
+}
+
+.websocket .method.method-on {
+    background-color: var(--green)
+}
+
+.websocket .method.method-emit {
+    background-color: var(--violet)
 }
 
 .content pre > p, .content blockquote > p {

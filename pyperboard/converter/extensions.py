@@ -51,20 +51,22 @@ class RequestAttributePattern(Pattern):
 
 
 class ApiEndpointPattern(Pattern):
-    ENDPOINT_METHODS = ['get', 'post', 'put', 'patch', 'delete', 'options', 'head']
+    METHODS = ['get', 'post', 'put', 'patch', 'delete', 'options', 'head']
+
+    PARENT_ELEMENT_CLASS = 'api-endpoint'
 
     def handleMatch(self, m):
         endpoint_method = m.group('method').lower()
         endpoint_url = m.group('url')
 
-        if endpoint_method not in self.ENDPOINT_METHODS:
+        if endpoint_method not in self.METHODS:
             return None
 
         return self._get_endpoint_elem(endpoint_method, endpoint_url)
 
     def _get_endpoint_elem(self, endpoint_method: str, endpoint_url: str) -> etree.Element:
         elem = etree.Element('div')
-        elem.set('class', 'api-endpoint')
+        elem.set('class', self.PARENT_ELEMENT_CLASS)
 
         endpoint_method_elem = self._get_endpoint_method_elem(endpoint_method)
         endpoint_url_elem = self._get_endpoint_url_elem(endpoint_url)
@@ -91,10 +93,17 @@ class ApiEndpointPattern(Pattern):
         return elem
 
 
+class WebsocketEventPattern(ApiEndpointPattern):
+    METHODS = ['on', 'emit']
+    PARENT_ELEMENT_CLASS = 'websocket'
+
+
 class RestApiExtension(Extension):
     REQUEST_ATTRIBUTE_RE = r'\[(?P<attribute>\w+):(?P<type>\W+)\]'
     API_ENDPOINT_RE = r'\[(?P<method>\w+)\|(?P<url>\S+)\]'
+    SOCKET_EVENT_RE = r'\[(?P<method>\w+)\|(?P<url>[a-zA-Z0-9_ ]+)\]'
 
     def extendMarkdown(self, md, md_globals):
         md.inlinePatterns.add('attribute_field', RequestAttributePattern(self.REQUEST_ATTRIBUTE_RE, md), '_end')
         md.inlinePatterns.add('api_endpoint', ApiEndpointPattern(self.API_ENDPOINT_RE, md), '_end')
+        md.inlinePatterns.add('socket_events', WebsocketEventPattern(self.SOCKET_EVENT_RE, md), '_end')
