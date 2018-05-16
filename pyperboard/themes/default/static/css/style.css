@@ -3,6 +3,16 @@
     src: url(/fonts/SourceCodePro-Regular.ttf);
 }
 
+@font-face {
+    font-family: IcoMoon;
+    src: url(/fonts/IcoMoon.ttf);
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(/fonts/Roboto-Regular.ttf);
+}
+
 :root {
     --code-font: SourceCodePro;
     --red: #E74443;
@@ -37,6 +47,7 @@ html {
 
 body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 a:active, a:hover {
@@ -192,7 +203,7 @@ table {
 }
 
 .content aside.warning:before, .content aside.notice:before, .content aside.success:before {
-    font-family: 'icomoon';
+    font-family: 'IcoMoon';
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -202,16 +213,15 @@ table {
 }
 
 .content aside.warning:before {
-    content: "\e600";
+    content: "warning";
 }
 
 .content aside.notice:before {
-    content: "\e602";
-    font-weight: bold;
+    content: "notification";
 }
 
 .content aside.success:before {
-    content: "\e606";
+    content: "checkmark";
 }
 
 html, body {
@@ -310,7 +320,6 @@ html, body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: block;
-    text-shadow: 0px 1px 0px white;
 }
 
 .content > ul, .content > ol {
@@ -434,21 +443,23 @@ html, body {
 .content aside {
     padding-top: 1em;
     padding-bottom: 1em;
-    text-shadow: 0 1px 0 #c6dde9;
     margin-top: 1.5em;
     margin-bottom: 1.5em;
-    background: #8fbcd4;
+    background: var(--cyan);
+    color: white;
+    font-size: 14px;
     line-height: 1.6;
+    margin-left: 2%;
+    margin-right: 52%;
+    border-radius: 2px;
 }
 
 .content aside.warning {
-    background-color: #c97a7e;
-    text-shadow: 0 1px 0 #dfb0b3;
+    background-color: var(--red);
 }
 
 .content aside.success {
-    background-color: #6ac174;
-    text-shadow: 0 1px 0 #a0d7a6;
+    background-color: var(--green);
 }
 
 .content aside:before {
