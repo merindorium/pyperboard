@@ -1,5 +1,8 @@
+import re
+
 from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern
+from markdown.preprocessors import Preprocessor
 from markdown.util import etree
 
 
@@ -98,6 +101,41 @@ class WebsocketEventPattern(ApiEndpointPattern):
     PARENT_ELEMENT_CLASS = 'websocket'
 
 
+class SegmentPreprocessor(Preprocessor):
+    SEGMENT_RE = re.compile(r'@@@(?P<segment_name>[\S]+)*\n(?P<data>[\s\S]*)?\n@@@',
+                            re.MULTILINE | re.DOTALL | re.VERBOSE)
+
+    SEGMENT_CLASS = 'segment'
+    SEGMENT_WRAP = '<div id="{segment_name}" class={segment_class} markdown>{data}</div>'
+
+    def run(self, lines):
+        text = '\n'.join(lines)
+
+        while True:
+
+            matched = self.SEGMENT_RE.search(text)
+
+            if matched:
+
+                segment_name = matched.group('segment_name')
+                segment_data = matched.group('data')
+
+                segment = self.SEGMENT_WRAP.format(segment_class=self.SEGMENT_CLASS,
+                                                   segment_name=segment_name,
+                                                   data=segment_data)
+
+                text = '{}\n{}\n{}'.format(
+                    text[:matched.start()],
+                    segment,
+                    text[matched.end():]
+                )
+
+            else:
+                break
+
+        return text.split('\n')
+
+
 class RestApiExtension(Extension):
     REQUEST_ATTRIBUTE_RE = r'\[(?P<attribute>\w+):(?P<type>\W+)\]'
     API_ENDPOINT_RE = r'\[(?P<method>\w+)\|(?P<url>\S+)\]'
@@ -107,3 +145,10 @@ class RestApiExtension(Extension):
         md.inlinePatterns.add('attribute_field', RequestAttributePattern(self.REQUEST_ATTRIBUTE_RE, md), '_end')
         md.inlinePatterns.add('api_endpoint', ApiEndpointPattern(self.API_ENDPOINT_RE, md), '_end')
         md.inlinePatterns.add('socket_events', WebsocketEventPattern(self.SOCKET_EVENT_RE, md), '_end')
+
+
+class SegmentExtension(Extension):
+    SEGMENT_RE = r'``(?P<segment>[\S]+)*\n(?P<data>[\s\S]*)?\n``'
+
+    def extendMarkdown(self, md, md_globals):
+        md.preprocessors.add('segment', SegmentPreprocessor(md), '_end')
