@@ -489,6 +489,7 @@ html, body {
 }
 
 .content .codehilite {
+    position: relative;
     background-color: #292929;
     border-radius: 3px;
     margin-right: 2%;
@@ -599,4 +600,51 @@ a:focus {
     color: #6e6e6e;
     font-family: var(--code-font);
 
+}
+
+
+.copy-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(221, 221, 221, 0.35);
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 0 3px 0 3px;
+}
+
+.copy-button:before {
+    font-family: 'IcoMoon';
+    content: 'paste';
+    color: #fff;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 16px;
+}
+
+.copy-button:hover {
+    background-color: rgba(221, 221, 221, 0.45);
+}
+
+.copy-button:active {
+    background-color: rgba(221, 221, 221, 0.35);
+}
+
+.copy-button:focus {
+    text-decoration: none;
+    outline: 0;
+}
+
+.tippy-tooltip.light-theme {
+  background-color: white;
+  color: black;
+}
+
+.tippy-tooltip.light-theme .tippy-arrow {
+    border-top: 7px solid white;
 }

@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/code_highlight.css') }}"/>
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/segment.css') }}"/>
     <script src="{{ url_for('static', filename='/js/tocbot.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/clipboard.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/tippy.all.min.js') }}"></script>
+
 </head>
 <body>
 <div class="toc"></div>
@@ -23,14 +26,6 @@
     </div>
 </div>
 </body>
-<script>
-    tocbot.init({
-        tocSelector: '.toc',
-        contentSelector: '.content',
-        headingSelector: 'h1, h2',
-        throttleTimeout: 150,
-        scrollSmooth: false
-    });
-</script>
+<script src="{{ url_for('static', filename='/js/index.js') }}"></script>
 <script src="{{ url_for('static', filename='/js/segment.js') }}"></script>
 </html>
