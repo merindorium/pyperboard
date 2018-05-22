@@ -322,6 +322,14 @@ html, body {
     display: block;
 }
 
+.segment > h1, .segment > h2, .segment > h3, .segment > h4, .segment > h5, .segment > h6, .segment > p, .segment > table, .segment > ul, .segment > ol, .segment > aside, .segment > dl{
+    padding: 0 28px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+}
+
 .content > ul, .content > ol {
     padding-left: 43px;
 }
