@@ -4,6 +4,7 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.preprocessors import Preprocessor
 from markdown.util import etree
+from typing import Iterable
 
 
 class RequestAttributePattern(Pattern):
@@ -102,11 +103,10 @@ class WebsocketEventPattern(ApiEndpointPattern):
 
 
 class SegmentPreprocessor(Preprocessor):
-    SEGMENT_RE = re.compile(r'@@@(?P<segment_name>[\S]+)*\n(?P<data>[\s\S]*)?\n@@@',
+    SEGMENT_RE = re.compile(r'@@@(?P<segment_name>[\S]+?)\n(?P<data>[\s\S]+?)?\n@@@',
                             re.MULTILINE | re.DOTALL | re.VERBOSE)
-
     SEGMENT_CLASS = 'segment'
-    SEGMENT_WRAP = '<div id="{segment_name}" class={segment_class} markdown>{data}</div>'
+    SEGMENT_WRAP = '<div id="{segment_name}" class="{segment_class}" markdown>{data}</div>'
 
     def run(self, lines):
         text = '\n'.join(lines)
@@ -136,6 +136,39 @@ class SegmentPreprocessor(Preprocessor):
         return text.split('\n')
 
 
+class SegmentMenuPattern(Pattern):
+    SEGMENT_MENU_CLASS = 'segment-menu'
+    SEGMENT_MENU_ITEM_CLASS = 'segment-menu-item'
+    SEGMENT_DATASET_NAME = 'segment'
+
+    def handleMatch(self, m):
+        segments = m.group('segments')
+        segments = segments.split(',')
+
+        segment_menu = self._get_segment_menu(segments)
+
+        return segment_menu
+
+    def _get_segment_menu(self, segments: Iterable[str]) -> etree.Element:
+        segment_menu = etree.Element('menu')
+        segment_menu.set('class', self.SEGMENT_MENU_CLASS)
+
+        for segment_name in segments:
+            if segment_name:
+                menu_item = self._get_segment_menu_item(segment_name)
+                segment_menu.append(menu_item)
+
+        return segment_menu
+
+    def _get_segment_menu_item(self, segment_name: str) -> etree.Element:
+        segment_menu_item = etree.Element('span')
+        segment_menu_item.set('class', self.SEGMENT_MENU_ITEM_CLASS)
+        segment_menu_item.set('data-{}'.format(self.SEGMENT_DATASET_NAME), segment_name)
+        segment_menu_item.text = segment_name.capitalize()
+
+        return segment_menu_item
+
+
 class RestApiExtension(Extension):
     REQUEST_ATTRIBUTE_RE = r'\[(?P<attribute>\w+):(?P<type>\W+)\]'
     API_ENDPOINT_RE = r'\[(?P<method>\w+)\|(?P<url>\S+)\]'
@@ -148,7 +181,8 @@ class RestApiExtension(Extension):
 
 
 class SegmentExtension(Extension):
-    SEGMENT_RE = r'``(?P<segment>[\S]+)*\n(?P<data>[\s\S]*)?\n``'
+    SEGMENT_MENU_RE = r'\[segment-menu\|(?P<segments>[\S\,]+)\]'
 
     def extendMarkdown(self, md, md_globals):
-        md.preprocessors.add('segment', SegmentPreprocessor(md), '_end')
+        md.preprocessors.add('segment', SegmentPreprocessor(md), '_begin')
+        md.inlinePatterns.add('segment_menu', SegmentMenuPattern(self.SEGMENT_MENU_RE, md), '_end')

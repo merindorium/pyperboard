@@ -5,7 +5,8 @@ from pyperboard.converter import extensions
 md = markdown.Markdown(extensions=['extra',
                                    'toc',
                                    'codehilite',
-                                   extensions.RestApiExtension()])
+                                   extensions.RestApiExtension(),
+                                   extensions.SegmentExtension()])
 
 
 def convert_md(md_text: str) -> str:
