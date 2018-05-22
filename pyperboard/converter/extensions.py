@@ -4,7 +4,6 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.preprocessors import Preprocessor
 from markdown.util import etree
-from typing import Iterable
 
 
 class RequestAttributePattern(Pattern):
@@ -103,10 +102,12 @@ class WebsocketEventPattern(ApiEndpointPattern):
 
 
 class SegmentPreprocessor(Preprocessor):
-    SEGMENT_RE = re.compile(r'@@@(?P<segment_name>[\S]+?)\n(?P<data>[\s\S]+?)?\n@@@',
+    SEGMENT_RE = re.compile(r'@@@(?P<segment_group>[\S]+?)\|(?P<segment_name>[\S]+?)\n(?P<data>[\s\S]+?)?\n@@@',
                             re.MULTILINE | re.DOTALL | re.VERBOSE)
     SEGMENT_CLASS = 'segment'
-    SEGMENT_WRAP = '<div id="{segment_name}" class="{segment_class}" markdown>{data}</div>'
+    SEGMENT_WRAP = '<div id="{segment_group}__{segment_name}" ' \
+                   'class="{segment_class}" data-segment={segment_name} markdown>{data}' \
+                   '</div>'
 
     def run(self, lines):
         text = '\n'.join(lines)
@@ -118,9 +119,11 @@ class SegmentPreprocessor(Preprocessor):
             if matched:
 
                 segment_name = matched.group('segment_name')
+                segment_group = matched.group('segment_group')
                 segment_data = matched.group('data')
 
                 segment = self.SEGMENT_WRAP.format(segment_class=self.SEGMENT_CLASS,
+                                                   segment_group=segment_group,
                                                    segment_name=segment_name,
                                                    data=segment_data)
 
@@ -139,34 +142,20 @@ class SegmentPreprocessor(Preprocessor):
 class SegmentMenuPattern(Pattern):
     SEGMENT_MENU_CLASS = 'segment-menu'
     SEGMENT_MENU_ITEM_CLASS = 'segment-menu-item'
-    SEGMENT_DATASET_NAME = 'segment'
+    SEGMENT_DATASET_NAME = 'group'
 
     def handleMatch(self, m):
-        segments = m.group('segments')
-        segments = segments.split(',')
-
-        segment_menu = self._get_segment_menu(segments)
+        segment_group = m.group('segment_group')
+        segment_menu = self._get_segment_menu(segment_group)
 
         return segment_menu
 
-    def _get_segment_menu(self, segments: Iterable[str]) -> etree.Element:
-        segment_menu = etree.Element('menu')
+    def _get_segment_menu(self, segment_group: str) -> etree.Element:
+        segment_menu = etree.Element('nav')
         segment_menu.set('class', self.SEGMENT_MENU_CLASS)
-
-        for segment_name in segments:
-            if segment_name:
-                menu_item = self._get_segment_menu_item(segment_name)
-                segment_menu.append(menu_item)
+        segment_menu.set('data-{}'.format(self.SEGMENT_DATASET_NAME), segment_group)
 
         return segment_menu
-
-    def _get_segment_menu_item(self, segment_name: str) -> etree.Element:
-        segment_menu_item = etree.Element('span')
-        segment_menu_item.set('class', self.SEGMENT_MENU_ITEM_CLASS)
-        segment_menu_item.set('data-{}'.format(self.SEGMENT_DATASET_NAME), segment_name)
-        segment_menu_item.text = segment_name.capitalize()
-
-        return segment_menu_item
 
 
 class RestApiExtension(Extension):
@@ -181,7 +170,7 @@ class RestApiExtension(Extension):
 
 
 class SegmentExtension(Extension):
-    SEGMENT_MENU_RE = r'\[segment-menu\|(?P<segments>[\S\,]+)\]'
+    SEGMENT_MENU_RE = r'\[segment-menu\|(?P<segment_group>[\S]+)\]'
 
     def extendMarkdown(self, md, md_globals):
         md.preprocessors.add('segment', SegmentPreprocessor(md), '_begin')
