@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/style.css') }}"/>
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/toc.css') }}"/>
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/code_highlight.css') }}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='/css/segment.css') }}"/>
     <script src="{{ url_for('static', filename='/js/tocbot.js') }}"></script>
 </head>
 <body>
@@ -31,4 +32,5 @@
         scrollSmooth: false
     });
 </script>
+<script src="{{ url_for('static', filename='/js/segment.js') }}"></script>
 </html>
