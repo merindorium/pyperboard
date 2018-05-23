@@ -101,6 +101,44 @@ class WebsocketEventPattern(ApiEndpointPattern):
     PARENT_ELEMENT_CLASS = 'websocket'
 
 
+class ValuesListPattern(Pattern):
+
+    def handleMatch(self, m):
+        list_values = m.group('list_values')
+        list_values = [value for value in list_values.split(',') if value]
+
+        list_elem = etree.Element('ul')
+
+        for value in list_values:
+            value_elem = self._get_value_elem(value)
+            list_elem.append(value_elem)
+
+        return list_elem
+
+    @staticmethod
+    def _get_value_elem(value_text: str) -> etree.Element:
+        list_item_elem = etree.Element('li')
+        code_elem = etree.Element('code')
+        code_elem.text = value_text
+
+        list_item_elem.append(code_elem)
+
+        return list_item_elem
+
+
+class RestApiExtension(Extension):
+    REQUEST_ATTRIBUTE_RE = r'\[(?P<attribute>\w+):(?P<type>\W+)\]'
+    API_ENDPOINT_RE = r'\[(?P<method>\w+)\|(?P<url>\S+)\]'
+    SOCKET_EVENT_RE = r'\[(?P<method>\w+)\|(?P<url>[a-zA-Z0-9_ ]+)\]'
+    VALUES_LIST_RE = r'\[(?P<list_values>[\w\,]+?)\]'
+
+    def extendMarkdown(self, md, md_globals):
+        md.inlinePatterns.add('attribute_field', RequestAttributePattern(self.REQUEST_ATTRIBUTE_RE, md), '_end')
+        md.inlinePatterns.add('api_endpoint', ApiEndpointPattern(self.API_ENDPOINT_RE, md), '_end')
+        md.inlinePatterns.add('socket_events', WebsocketEventPattern(self.SOCKET_EVENT_RE, md), '_end')
+        md.inlinePatterns.add('value_list', ValuesListPattern(self.VALUES_LIST_RE, md), '_end')
+
+
 class SegmentPreprocessor(Preprocessor):
     SEGMENT_RE = re.compile(r'@@@(?P<segment_group>[\S]+?)\|(?P<segment_name>[\S]+?)\n(?P<data>[\s\S]+?)?\n@@@',
                             re.MULTILINE | re.DOTALL | re.VERBOSE)
@@ -156,17 +194,6 @@ class SegmentMenuPattern(Pattern):
         segment_menu.set('data-{}'.format(self.SEGMENT_DATASET_NAME), segment_group)
 
         return segment_menu
-
-
-class RestApiExtension(Extension):
-    REQUEST_ATTRIBUTE_RE = r'\[(?P<attribute>\w+):(?P<type>\W+)\]'
-    API_ENDPOINT_RE = r'\[(?P<method>\w+)\|(?P<url>\S+)\]'
-    SOCKET_EVENT_RE = r'\[(?P<method>\w+)\|(?P<url>[a-zA-Z0-9_ ]+)\]'
-
-    def extendMarkdown(self, md, md_globals):
-        md.inlinePatterns.add('attribute_field', RequestAttributePattern(self.REQUEST_ATTRIBUTE_RE, md), '_end')
-        md.inlinePatterns.add('api_endpoint', ApiEndpointPattern(self.API_ENDPOINT_RE, md), '_end')
-        md.inlinePatterns.add('socket_events', WebsocketEventPattern(self.SOCKET_EVENT_RE, md), '_end')
 
 
 class SegmentExtension(Extension):
