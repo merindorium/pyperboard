@@ -47,3 +47,20 @@ function initClipboardToolip() {
 
     });
 }
+
+function addColumnsToLists(){
+    listsInDocument = document.querySelectorAll('ul');
+
+    console.log(listsInDocument);
+    console.log(listsInDocument.length);
+
+    listsInDocument.forEach(function (list){
+        linesInList = list.querySelectorAll('li');
+
+        if (linesInList.length >= 5){
+            list.classList.add("two-columns");
+        }
+    });
+}
+
+addColumnsToLists();

@@ -4,5 +4,5 @@ from pyperboard.config import options
 
 
 class ConfigSchema(Schema):
-    DOCS_DIR = options.Dir(required=True)
+    DOCS_DIR = options.Dir()
     ORDER = fields.List(fields.String())

@@ -5,6 +5,7 @@ from pyperboard.converter import extensions
 md = markdown.Markdown(extensions=['extra',
                                    'toc',
                                    'codehilite',
+                                   'admonition',
                                    extensions.RestApiExtension(),
                                    extensions.SegmentExtension()])
 

@@ -130,7 +130,7 @@ class RestApiExtension(Extension):
     REQUEST_ATTRIBUTE_RE = r'\[(?P<attribute>\w+):(?P<type>\W+)\]'
     API_ENDPOINT_RE = r'\[(?P<method>\w+)\|(?P<url>\S+)\]'
     SOCKET_EVENT_RE = r'\[(?P<method>\w+)\|(?P<url>[a-zA-Z0-9_ ]+)\]'
-    VALUES_LIST_RE = r'\[(?P<list_values>[\w\,]+?)\]'
+    VALUES_LIST_RE = r'\[(?P<list_values>[\w\-\,\.]+?)\]'
 
     def extendMarkdown(self, md, md_globals):
         md.inlinePatterns.add('attribute_field', RequestAttributePattern(self.REQUEST_ATTRIBUTE_RE, md), '_end')
@@ -189,7 +189,7 @@ class SegmentMenuPattern(Pattern):
         return segment_menu
 
     def _get_segment_menu(self, segment_group: str) -> etree.Element:
-        segment_menu = etree.Element('nav')
+        segment_menu = etree.Element('div')
         segment_menu.set('class', self.SEGMENT_MENU_CLASS)
         segment_menu.set('data-{}'.format(self.SEGMENT_DATASET_NAME), segment_group)
 

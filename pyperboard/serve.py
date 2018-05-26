@@ -38,6 +38,10 @@ def serve():
     else:
         config = Config()
 
+        docs_dir = os.path.dirname(os.path.abspath(args.config))
+
+        config.DOCS_DIR = docs_dir
+
         try:
             config.update_from_json(options)
         except ConfigurationError as err:

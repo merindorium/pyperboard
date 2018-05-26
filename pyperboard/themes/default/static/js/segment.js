@@ -28,7 +28,7 @@ function initSegmentMenus() {
 function createSegmentMenuItem(segmentName, segmentGroup) {
     var button = document.createElement('span');
     button.classList.add('segment-menu-item');
-    button.innerText = segmentName.charAt(0).toUpperCase() + segmentName.slice(1);
+    button.innerText = segmentName;
     button.dataset.segment = segmentName;
 
     button.onclick = function (event) {

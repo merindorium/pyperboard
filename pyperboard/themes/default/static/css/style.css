@@ -1,16 +1,16 @@
 @font-face {
     font-family: SourceCodePro;
-    src: url(/fonts/SourceCodePro-Regular.ttf);
+    src: url(../fonts/SourceCodePro-Regular.ttf);
 }
 
 @font-face {
     font-family: IcoMoon;
-    src: url(/fonts/IcoMoon.ttf);
+    src: url(../fonts/IcoMoon.ttf);
 }
 
 @font-face {
     font-family: Roboto;
-    src: url(/fonts/Roboto-Regular.ttf);
+    src: url(../fonts/Roboto-Regular.ttf);
 }
 
 :root {
@@ -216,6 +216,10 @@ table {
     content: "warning";
 }
 
+.content aside.danger:before {
+    content: "warning";
+}
+
 .content aside.notice:before {
     content: "notification";
 }
@@ -397,6 +401,9 @@ html, body {
 .content table {
     margin-bottom: 1em;
     overflow: auto;
+    width: 48%;
+    margin: 0 1%;
+    display: inline-table;
 }
 
 .content table th, .content table td {
@@ -463,6 +470,10 @@ html, body {
 }
 
 .content aside.warning {
+    background-color: var(--orange);
+}
+
+.content aside.danger {
     background-color: var(--red);
 }
 
@@ -616,7 +627,7 @@ a:focus {
 
 .copy-button:before {
     font-family: 'IcoMoon';
-    content: 'paste';
+    content: 'copy';
     color: #fff;
     speak: none;
     font-style: normal;
@@ -647,4 +658,35 @@ a:focus {
 
 .tippy-tooltip.light-theme .tippy-arrow {
     border-top: 7px solid white;
+}
+
+.content .admonition {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    background: var(--cyan);
+    color: white;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-left: 2%;
+    margin-right: 52%;
+    border-radius: 2px;
+}
+
+.content .admonition.warning {
+    background-color: var(--red);
+}
+
+.content .admonition.success {
+    background-color: var(--green);
+}
+
+.content .admonition.info {
+    background-color: var(--cyan);
+}
+
+.content ul.two-columns {
+    columns: 2;
+    list-style-position: inside;
 }
