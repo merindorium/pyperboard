@@ -13,4 +13,4 @@ click = "*"
 marshmallow = "*"
 pyyaml = "*"
 colorful = "*"
-
+markdown = "*"
