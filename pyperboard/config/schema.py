@@ -17,6 +17,7 @@ class File(fields.String):
 
 class ConfigSchema(Schema):
     pages = fields.List(File, required=True)
+    extensions = fields.List(fields.String, missing=[])
 
     class Meta:
         unknown = EXCLUDE
