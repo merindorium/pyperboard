@@ -5,17 +5,15 @@ from pyperboard.renderer.markdown import extensions
 
 
 class MarkdownRenderer(base.Renderer):
+
+    CUSTOM_EXTENSIONS_MAPPING = {
+        "rest_api": extensions.RestApiExtension(),
+        "segment": extensions.SegmentExtension(),
+    }
+
     def render(self, page: str) -> str:
         return self.markdown_renderer.convert(page)
 
     @property
     def markdown_renderer(self) -> markdown.Markdown:
-        return markdown.Markdown(
-            extensions=[
-                "extra",
-                "toc",
-                "codehilite",
-                extensions.RestApiExtension(),
-                extensions.SegmentExtension(),
-            ]
-        )
+        return markdown.Markdown(extensions=self.extensions)
